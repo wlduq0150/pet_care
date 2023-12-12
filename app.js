@@ -4,10 +4,10 @@ import path from "path";
 import nunjucks from "nunjucks";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
-import { sessionMiddleware } from "./appMiddleware/sessionMiddleware.js";
-import { routerMiddleware } from "./appMiddleware/routerMiddleware.js";
-import { errorMiddleware } from "./appMiddleware/errorMiddleware.js";
-import { mongoConnect } from "./database/mongoose/index.js";
+import { sessionMiddleware } from "./middlewares/sessionMiddleware.js";
+import { routerMiddleware } from "./middlewares/routerMiddleware.js";
+import { errorMiddleware } from "./middlewares/errorMiddleware.js";
+import db from "./models/index.js";
 
 // 환경변수 세팅
 dotenv.config();
@@ -29,7 +29,14 @@ nunjucks.configure(path.join(__dirname, "views"), {
 });
 
 // DB
-mongoConnect();
+db.sequelize.sync()
+.then(() => {
+	console.log("데이터베이스 연결 성공");
+})
+.catch((e) => {
+	console.log("데이터베이스 연결 실패");
+	console.log(e);
+});
 
 // middleware
 // middleware
@@ -46,6 +53,8 @@ app.use(express.json());
 // 쿠키 처리 미들웨어
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(sessionMiddleware);
+
+// api 라우터
 
 // 라우터 404 에러 방지 미들웨어
 app.use(routerMiddleware);
