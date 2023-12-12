@@ -33,8 +33,8 @@ export class ReviewsController{
 
     createReview= async(req,res,next)=>{
         try{
-            //로그인한 유저 정보 받기
-            const {sitterId, comment, grade} =req.body;
+            //아래 userId는 추후에 로그인한 유저 정보 받고 지울예정
+            const {userId,sitterId, comment, grade} =req.body;
 
             if(!sitterId){
                 return res.status(400).json({
@@ -57,7 +57,9 @@ export class ReviewsController{
                 })
             }
 
+            
             const createdReview =await this.reviewsService.createReview(
+                userId,
                 sitterId,
                 comment,
                 grade,
@@ -75,9 +77,9 @@ export class ReviewsController{
 
     updateReview=async(req,res,next)=>{
         try{
-            //로그인한 유저 정보 받기
+            //아래 userId는 추후에 로그인한 유저 정보 받고 지울예정
             const {reviewId} =req.params;
-            const {sitterId, comment, grade} =req.body;
+            const {userId,sitterId, comment, grade} =req.body;
 
             if(!sitterId && !comment && !grade){
                 return res.status(400).json({
@@ -95,8 +97,16 @@ export class ReviewsController{
                 })
             }
             //내가 작성한 리뷰인지 확인 
+            const myreview= review.userId==userId;
+            if(!myreview){
+                return res.status(403).json({
+                    ok:false,
+                    message:"수정할 수 없는 리뷰입니다."
+                })
+            }
             //서비스로 보내기
             const updatedReview= await this.reviewsService.updateReview(
+                review,
                 reviewId,
                 sitterId,
                 comment,
@@ -115,8 +125,8 @@ export class ReviewsController{
 
     deleteReview= async(req,res,next)=>{
         try{
-            //로그인한 유저 정보 받기
-            const {reviewId} =req.params;
+            //아래 userId는 추후에 로그인한 유저 정보 받고 지울예정
+            const {userId, reviewId} =req.params;
 
             //해당 리뷰가 있는지 확인
             const review =await this.reviewsService.findReviewById(reviewId);
@@ -125,15 +135,25 @@ export class ReviewsController{
                 return res.status(404).json({
                     ok:false,
                     message:"해당 리뷰는 존재하지 않습니다.",
+                    data: review,
                 })
             }
 
             //내가 만든 리뷰인지 확인
+            const myreview= review.userId==userId;
+            if(!myreview){
+                return res.status(403).json({
+                    ok:false,
+                    message:"삭제할 수 없는 리뷰입니다."
+                })
+            }
+           
             //서비스로 보내기
-            const deletedReview= await this.reviewsService.deleteReview(reviewId)
+            const deletedReview= await this.reviewsService.deleteReview(review,reviewId)
             return res.status(200).json({
                 ok:true,
-                message:"리뷰를 삭제했습니다.",    
+                message:"리뷰를 삭제했습니다.", 
+                data: deletedReview,   
             })
         }catch(err){
             next(err);
