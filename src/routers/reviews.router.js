@@ -7,12 +7,12 @@ const reviewsController =new ReviewsController();
 
 router.get("/",reviewsController.getReviews);
 
-router.get("/:reviewsId",reviewsController.getReviewsById);
+router.get("/:reviewId",reviewsController.getReviewById);
 
-router.post("/",reviewsController.createReviews);
+router.post("/",reviewsController.createReview);
 
-router.put("/:reviewsId",reviewsController.updateReviews);
+router.put("/:reviewId",reviewsController.updateReview);
 
-router.delete("/:reviewsId",reviewsController.deleteReviews);
+router.delete("/:reviewId",reviewsController.deleteReview);
 
 export default router;
