@@ -21,4 +21,4 @@ Review.init(sequelize);
 
 User.associate(db);
 
-export default db;
+export { db };
