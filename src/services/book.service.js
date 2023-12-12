@@ -26,4 +26,27 @@ export class BookService {
         };
     }
 
+    cancleBook = async (userId, bookId) => {
+        const book = await this.bookRepository.findBook(bookId);
+
+        if (!book) {
+            const error = new Error("존재하지 않는 예약 정보입니다.");
+            error.status = 404;
+            throw error;
+        }
+
+        if (book.userId !== userId) {
+            const error = new Error("예약을 취소할 권한이 없습니다.");
+            error.status = 403;
+            throw error;
+        }
+
+        await this.bookRepository.cancleBook(bookId);
+        
+        return {
+            ok: true,
+            message: "예약을 성공적으로 취소했습니다."
+        };
+    }
+
 }
