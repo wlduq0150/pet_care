@@ -1,5 +1,5 @@
-import db from "./models/index.js";
-import { Sequelize } from 'sequelize';
+import {db} from "../../models/index.js";
+//import { Sequelize } from 'sequelize';
 
 const {Review, User}= db;
 
@@ -25,6 +25,7 @@ export class ReviewsRepository{
     }
 
     findReviewById =async(reviewId)=>{
+        console.log(reviewId);
         const review =await Review.findByPk(reviewId,{
             attributes:[
                 "id",

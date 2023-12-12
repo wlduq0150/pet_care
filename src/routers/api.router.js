@@ -1,7 +1,9 @@
 import express from 'express';
-import reviews from "./reviews.router.js";
+import {reviewRouter} from "./reviews.router.js";
 
-router.use("./reviews",reviews);
+const apiRouter =express.Router();
 
-const router =express.Router();
+apiRouter.use("/reviews",reviewRouter);
 
+
+export {apiRouter};

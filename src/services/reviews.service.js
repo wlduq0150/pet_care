@@ -12,6 +12,7 @@ export class ReviewsService{
 
         return reviews.map((review)=>{
             return{
+                id: review.id,
                 //sitterName:review.sitterName,
                 sitterId :review.sitterId,
                 grade: review.grade,

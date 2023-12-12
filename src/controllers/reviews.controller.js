@@ -24,8 +24,14 @@ export class ReviewsController{
                 return res.status(404).json({
                     ok:false,
                     message:"해당 리뷰는 존재하지 않습니다",
-                })
+                });
             }
+            
+            return res.status(200).json({
+                ok:true,
+                message:"리뷰 조회에 성공했습니다.",
+                data: review,
+            });
         }catch(err){
             next(err);
         }
@@ -57,7 +63,6 @@ export class ReviewsController{
                 })
             }
 
-            
             const createdReview =await this.reviewsService.createReview(
                 userId,
                 sitterId,

@@ -1,18 +1,18 @@
 import express from 'express';
 import {ReviewsController} from "../controllers/reviews.controller.js";
 
-const router =express.Router();
+const reviewRouter =express.Router();
 
 const reviewsController =new ReviewsController();
 
-router.get("/",reviewsController.getReviews);
+reviewRouter.get("/",reviewsController.getReviews);
 
-router.get("/:reviewId",reviewsController.getReviewById);
+reviewRouter.get("/:reviewId",reviewsController.getReviewById);
 
-router.post("/",reviewsController.createReview);
+reviewRouter.post("/",reviewsController.createReview);
 
-router.put("/:reviewId",reviewsController.updateReview);
+reviewRouter.put("/:reviewId",reviewsController.updateReview);
 
-router.delete("/:reviewId",reviewsController.deleteReview);
+reviewRouter.delete("/:reviewId",reviewsController.deleteReview);
 
-export default router;
+export {reviewRouter};
