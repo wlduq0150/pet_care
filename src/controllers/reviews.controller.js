@@ -84,9 +84,9 @@ export class ReviewsController{
         try{
             //아래 userId는 추후에 로그인한 유저 정보 받고 지울예정
             const {reviewId} =req.params;
-            const {userId,sitterId, comment, grade} =req.body;
+            const {userId,/*sitterId,*/ comment, grade} =req.body;
 
-            if(!sitterId && !comment && !grade){
+            if(/*!sitterId &&*/ !comment && !grade){
                 return res.status(400).json({
                     ok:false,
                     message:"한가지 이상은 변경해야 합니다",
@@ -111,9 +111,8 @@ export class ReviewsController{
             }
             //서비스로 보내기
             const updatedReview= await this.reviewsService.updateReview(
-                review,
                 reviewId,
-                sitterId,
+               // sitterId,
                 comment,
                 grade,
             )
@@ -154,7 +153,7 @@ export class ReviewsController{
             }
            
             //서비스로 보내기
-            const deletedReview= await this.reviewsService.deleteReview(review,reviewId)
+            const deletedReview= await this.reviewsService.deleteReview(reviewId)
             return res.status(200).json({
                 ok:true,
                 message:"리뷰를 삭제했습니다.", 

@@ -53,11 +53,11 @@ export class ReviewsService{
         };
     };
 
-    updateReview =async(review,reviewId,sitterId,comment,grade)=>{
+    updateReview =async(reviewId/*,sitterId*/,comment,grade)=>{
         const updatedReview = await this.reviewsRepository.updateReview(
-            review,
+           
             reviewId,
-            sitterId,
+           // sitterId,
             comment,
             grade,
             );
@@ -65,7 +65,7 @@ export class ReviewsService{
         return {
              //추후 sitterId를 제거하고 아래 주석을 제거 할 예정
            // sitterName: updatedReview.sitterName,
-            sitterId: updatedReview.sitterId,
+           // sitterId: updatedReview.sitterId,
             comment: updatedReview.comment,
             grade: updatedReview.grade,
             createdAt: updatedReview.createdAt,
@@ -73,9 +73,9 @@ export class ReviewsService{
         };
     };
 
-    deleteReview =async(review,reviewId)=>{
+    deleteReview =async(reviewId)=>{
 
-       const deletedReview= await this.reviewsRepository.deleteReview(review,reviewId);
+       const deletedReview= await this.reviewsRepository.deleteReview(reviewId);
         return{
             id: deletedReview.id,
         };

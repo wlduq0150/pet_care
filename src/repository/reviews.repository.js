@@ -25,7 +25,6 @@ export class ReviewsRepository{
     }
 
     findReviewById =async(reviewId)=>{
-        console.log(reviewId);
         const review =await Review.findByPk(reviewId,{
             attributes:[
                 "id",
@@ -49,11 +48,11 @@ export class ReviewsRepository{
         return createdReview;
     }
 
-    updateReview= async(review,reviewId,sitterId,comment,grade)=>{
+    updateReview= async(reviewId,/*sitterId,*/comment,grade)=>{
 
-      const updatedReview= await review.update(
+      const updatedReview= await Review.update(
             {
-                ...(sitterId &&{sitterId}),
+               // ...(sitterId &&{sitterId}),
                 ...(comment &&{comment}),
                 ...(grade &&{grade}),
             },
@@ -63,8 +62,8 @@ export class ReviewsRepository{
         return updatedReview;
     }
 
-    deleteReview= async(review,reviewId)=>{
-        const deletedReview=await review.destroy({where:{id:reviewId}});
+    deleteReview= async(reviewId)=>{
+        const deletedReview=await Review.destroy({where:{id:reviewId}});
         return deletedReview;
     }
 }
