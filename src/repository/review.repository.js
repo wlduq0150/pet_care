@@ -12,14 +12,15 @@ export class ReviewsRepository{
                
                 //추후에 주석 제거할 예정
                 "userId", 
+                //  [Sequelize.col('user.name'), 'userName'],
                 "sitterId",
                 "comment",
-               //[Sequelize.col('user.name'), 'userName'],
+             
                 "grade",
                 "createdAt",
                 "updatedAt",
             ],
-           // include: { model: User, as: 'user', attributes: [] },
+            include: { model: User, as: 'user', attributes: ["name"] },
         });
         
         return reviews;
@@ -47,11 +48,11 @@ export class ReviewsRepository{
     findReviewByUserId=async(userId)=>{
         const reviews =await Review.findAll({
             where:{
-                userId:{
-                    [op.eq]:userId
+                userId:+userId
                 }
-            }
+            
         });
+
 
         return reviews
     }

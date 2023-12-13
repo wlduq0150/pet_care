@@ -46,13 +46,13 @@ export class ReviewsController{
             if(!review){
                 return res.status(404).json({
                     ok:false,
-                    message:"해당 리뷰는 존재하지 않습니다",
+                    message:"해당 시터의 리뷰는 존재하지 않습니다",
                 });
             }
-            
+           
             return res.status(200).json({
                 ok:true,
-                message:"리뷰 조회에 성공했습니다.",
+                message:"해당 시터의 리뷰 조회에 성공했습니다.",
                 data: review,
             });
         }catch(err){
@@ -154,7 +154,7 @@ export class ReviewsController{
     deleteReview= async(req,res,next)=>{
         try{
             //아래 userId는 추후에 로그인한 유저 정보 받고 지울예정
-            const {userId, reviewId} =req.params;
+            const {/*userId*/ reviewId} =req.params;
 
             //해당 리뷰가 있는지 확인
             const review =await this.reviewsService.findReviewById(reviewId);
@@ -165,7 +165,7 @@ export class ReviewsController{
                     message:"해당 리뷰는 존재하지 않습니다.",
                 })
             }
-
+            /*
             //내가 만든 리뷰인지 확인
             const myreview= review.userId==userId;
             if(!myreview){
@@ -174,7 +174,7 @@ export class ReviewsController{
                     message:"삭제할 수 없는 리뷰입니다."
                 })
             }
-           
+           */
             //서비스로 보내기
             const deletedReview= await this.reviewsService.deleteReview(reviewId)
             return res.status(200).json({

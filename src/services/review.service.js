@@ -9,7 +9,7 @@ export class ReviewsService{
         reviews.sort((a,b)=>{
             return b.createdAt-a.createdAt;
         });
-
+        
         return reviews.map((review)=>{
             return{
                 id: review.id,
@@ -36,18 +36,17 @@ export class ReviewsService{
     };
 
     findReviewByUserId=async(userId)=>{
-        const review =await this.reviewsRepository.findReviewByUserId(userId);
+        const reviews =await this.reviewsRepository.findReviewByUserId(userId);
 
-        return{
-            //id는 추후에 지울 예정
-            id: review.id,
-            //추후 sitterId를 제거하고 아래 주석을 제거 할 예정
-            // sitterName: review.sitterName,
-            sitterId :review.sitterId,
-            userId: review.userId,
-            comment: review.comment,
-            grade: review.grade,
-        }
+        return reviews.map((review)=>{
+            return{
+                id: review.id,
+                //sitterName:review.sitterName,
+                sitterId :review.sitterId,
+                grade: review.grade,
+            };
+        });
+
     }
 
     //추후에 유저id도 받을 예정
