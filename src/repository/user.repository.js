@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt';
-import {
-  db
-} from "../../models/index.js";
+import { db } from "../../models/index.js";
 
 const {
   User
@@ -65,4 +63,15 @@ export class UsersRepository {
 
     return result;
   };
+  signup = async (hashCreateAuthData) => {
+    const result = await db.User.create({
+        ...hashCreateAuthData,
+    });
+    return result;
+    }
+
+    findUser = async (email) => {
+    const user = await db.User.findOne({ where: {email} })
+    return user;
+    }
 };
