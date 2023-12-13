@@ -12,6 +12,7 @@ export class AuthController {
         "name" in createAuthData &&
         "email" in createAuthData &&
         "password" in createAuthData &&
+        "checkpassword" in createAuthData &&
         "role" in createAuthData &&
         "experience" in createAuthData &&
         "type" in createAuthData;
