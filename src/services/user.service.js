@@ -3,8 +3,8 @@ import {
 } from "../repository/user.repository.js";
 export class UsersService {
     usersRepository = new UsersRepository();
-    getUsers = async () => {
-        return await this.usersRepository.readMany();
+    getSitters = async () => {
+        return await this.usersRepository.readSitters();
     }
 
     getUserById = async (userId) => { // 1. 인수로 로그인 세션을 받으면

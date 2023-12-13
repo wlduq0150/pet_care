@@ -8,7 +8,7 @@ const {
 } = db;
 
 export class UsersRepository {
-  readMany = async () => {
+  readSitters = async () => {
     const users = await User.findAll({
       where: {
         role: 'sitter'
@@ -49,7 +49,6 @@ export class UsersRepository {
       }
     });
 
-    console.log(result);
 
     return result;
   }
@@ -61,7 +60,6 @@ export class UsersRepository {
       }
     });
 
-    console.log(result);
 
     return result;
   };
