@@ -9,14 +9,14 @@ export default class Review extends Model {
 				primaryKey: true,
 				autoIncrement: true
 			},
-            userId: {
-                type: DataTypes.INTEGER,
-                allowNull: false
-            },
-            sitterId: {
-                type: DataTypes.INTEGER,
-                allowNull: false
-            },
+			userId: {
+				type: DataTypes.INTEGER,
+				allowNull: false
+			},
+			sitterId: {
+				type: DataTypes.INTEGER,
+				allowNull: false
+			},
 			comment: {
 				type: DataTypes.STRING(200),
 				allowNull: false
