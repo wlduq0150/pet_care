@@ -9,6 +9,7 @@ import { routerMiddleware } from "./middlewares/routerMiddleware.js";
 import { errorMiddleware } from "./middlewares/errorMiddleware.js";
 import { db } from "./models/index.js";
 import { BookRouter } from "./src/routers/book.router.js";
+import { usersRouter } from "./src/routers/user.router.js";
 
 // 환경변수 세팅
 dotenv.config();
@@ -56,7 +57,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(sessionMiddleware);
 
 // api 라우터
-app.use("/api", BookRouter );
+app.use("/api", [BookRouter, usersRouter]);
 
 // 라우터 404 에러 방지 미들웨어
 app.use(routerMiddleware);
