@@ -1,16 +1,16 @@
-import { UserRepository } from "../repository/user.repository.js";
+import { UsersRepository } from "../repository/user.repository.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export class AuthService {
-    userRepository = new UserRepository();
+    usersRepository = new UsersRepository();
 
     signup = async (createAuthData) => {
         const { email, name, password, role, experience, type } = createAuthData;
         const hashPassword = await bcrypt.hash(password, 10);
         const hashCreateAuthData = { ...createAuthData, password: hashPassword };
 
-        const result = await this.userRepository.signup(hashCreateAuthData);
+        const result = await this.usersRepository.signup(hashCreateAuthData);
         console.log(hashPassword);
 
         return {
@@ -23,7 +23,7 @@ export class AuthService {
     signin = async (signinData) => {
         const { email, password } = signinData;
 
-        const auth = await this.userRepository.findUser(email);
+        const auth = await this.usersRepository.findUser(email);
 
         if (!auth) {
             const error = new Error("존재하지 않는 이메일입니다.");
