@@ -1,4 +1,4 @@
-import {ReviewsService} from "../services/reviews.service.js";
+import {ReviewsService} from "../services/review.service.js";
 
 export class ReviewsController{
     reviewsService =new ReviewsService();
@@ -20,6 +20,29 @@ export class ReviewsController{
         try{
             const {reviewId} =req.params;
             const review =await this.reviewsService.findReviewById(reviewId);
+            if(!review){
+                return res.status(404).json({
+                    ok:false,
+                    message:"해당 리뷰는 존재하지 않습니다",
+                });
+            }
+            
+            return res.status(200).json({
+                ok:true,
+                message:"리뷰 조회에 성공했습니다.",
+                data: review,
+            });
+        }catch(err){
+            next(err);
+        }
+    }
+
+    getReviewByUserId= async(req,res,next)=>{
+        try{
+            const {userId}=req.params;
+
+            const review =await this.reviewsService.findReviewByUserId(userId);
+          
             if(!review){
                 return res.status(404).json({
                     ok:false,
@@ -92,6 +115,7 @@ export class ReviewsController{
                     message:"한가지 이상은 변경해야 합니다",
                 });
             }
+
             //해당 리뷰가 있는지 확인
             const review =await this.reviewsService.findReviewById(reviewId);
             //없으면 아래 실행
@@ -139,7 +163,6 @@ export class ReviewsController{
                 return res.status(404).json({
                     ok:false,
                     message:"해당 리뷰는 존재하지 않습니다.",
-                    data: review,
                 })
             }
 

@@ -1,5 +1,6 @@
 import {db} from "../../models/index.js";
-//import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize';
+const op = Sequelize.Op;
 
 const {Review, User}= db;
 
@@ -41,6 +42,18 @@ export class ReviewsRepository{
         });
 
         return review;
+    }
+    
+    findReviewByUserId=async(userId)=>{
+        const reviews =await Review.findAll({
+            where:{
+                userId:{
+                    [op.eq]:userId
+                }
+            }
+        });
+
+        return reviews
     }
 
     createReview = async(userId,sitterId,comment,grade)=>{

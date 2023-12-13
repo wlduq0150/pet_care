@@ -1,5 +1,5 @@
 import express from 'express';
-import {reviewRouter} from "./reviews.router.js";
+import {reviewRouter} from "./review.router.js";
 
 const apiRouter =express.Router();
 

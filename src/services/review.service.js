@@ -1,4 +1,4 @@
-import {ReviewsRepository} from "../repository/reviews.repository.js";
+import {ReviewsRepository} from "../repository/review.repository.js";
 
 export class ReviewsService{
     reviewsRepository = new ReviewsRepository();
@@ -34,6 +34,22 @@ export class ReviewsService{
             grade: review.grade,
         };
     };
+
+    findReviewByUserId=async(userId)=>{
+        const review =await this.reviewsRepository.findReviewByUserId(userId);
+
+        return{
+            //id는 추후에 지울 예정
+            id: review.id,
+            //추후 sitterId를 제거하고 아래 주석을 제거 할 예정
+            // sitterName: review.sitterName,
+            sitterId :review.sitterId,
+            userId: review.userId,
+            comment: review.comment,
+            grade: review.grade,
+        }
+    }
+
     //추후에 유저id도 받을 예정
     createReview =async(userId,sitterId,comment,grade)=>{
         const createdReview =await this.reviewsRepository.createReview(
