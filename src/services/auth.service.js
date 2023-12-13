@@ -10,8 +10,7 @@ export class AuthService {
         const hashPassword = await bcrypt.hash(password, 10);
         const hashCreateAuthData = { ...createAuthData, password: hashPassword };
 
-        const result = await this.usersRepository.signup(hashCreateAuthData);
-        console.log(hashPassword);
+        const result = await this.usersRepository.createUser(hashCreateAuthData);
 
         return {
             ok: true,
@@ -23,7 +22,7 @@ export class AuthService {
     signin = async (signinData) => {
         const { email, password } = signinData;
 
-        const auth = await this.usersRepository.findUser(email);
+        const auth = await this.usersRepository.readOneByEmail(email);
 
         if (!auth) {
             const error = new Error("존재하지 않는 이메일입니다.");
