@@ -32,6 +32,7 @@ export class UsersRepository {
         });
 
         return user;
+      }
     };
 
     updateOneById = async (id, {
