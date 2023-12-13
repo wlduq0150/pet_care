@@ -6,9 +6,15 @@ export class AuthService {
     usersRepository = new UsersRepository();
 
     signup = async (createAuthData) => {
-        const { email, name, password, role, experience, type } = createAuthData;
+        const { email, name, password, checkPassword, role, experience, type } = createAuthData;
         const hashPassword = await bcrypt.hash(password, 10);
-        const hashCreateAuthData = { ...createAuthData, password: hashPassword };
+        const hashCreateAuthData = { email, name, hashPassword, role, experience, type };
+
+        if (password !== checkPassword) {
+            const error = new Error("패스워드를 다시 확인해주세요.");
+            error.status = 403;
+            throw error;
+        }
 
         const result = await this.usersRepository.createUser(hashCreateAuthData);
 
@@ -38,7 +44,7 @@ export class AuthService {
             throw error;
         }
 
-        return jwt.sign({ emailId: auth.email }, process.env.COOKIE_SECRET, {
+        return jwt.sign({ userId: auth.email }, process.env.COOKIE_SECRET, {
             expiresIn: "2h",
         });
     }
