@@ -11,7 +11,7 @@ export class UsersController {
       const me = await this.usersService.getUserById(1);
 
       return res.status(200).json({
-        success: true,
+        ok: true,
         message: '펫 시터 프로필 조회에 성공했습니다.',
         data: me,
       });
@@ -23,10 +23,10 @@ export class UsersController {
 
   readUsers = async (req, res, next) => {
     try {
-      const users = await this.usersService.getUsers();
+      const users = await this.usersService.getSitters();
 
       return res.status(200).json({
-        success: true,
+        ok: true,
         message: '유저 프로필 조회에 성공했습니다.',
         data: users,
       });
@@ -44,7 +44,7 @@ export class UsersController {
       const user = await this.usersService.getUserById(id);
 
       return res.status(200).json({
-        success: true,
+        ok: true,
         message: '유저 상세프로필 조회에 성공했습니다.',
         data: user,
       });
@@ -62,7 +62,7 @@ export class UsersController {
       await this.usersService.updateUserById(id, body);
 
       return res.status(200).json({
-        success: true,
+        ok: true,
         message: '유저 프로필 조회에 성공했습니다.',
       })
     } catch (error) {
@@ -77,8 +77,8 @@ export class UsersController {
       await this.usersService.deleteUserById(id);
 
       return res.status(200).json({
-        success: true,
-        message: '유저 프로필 조회에 성공했습니다.',
+        ok: true,
+        message: '유저 프로필 삭제에 성공했습니다.',
       })
     } catch (error) {
       next(error);
