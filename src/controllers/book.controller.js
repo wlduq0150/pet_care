@@ -29,6 +29,7 @@ export class BookController {
 
     cancleBook = async (req, res, next) => {
         try {
+            const userId = req.user.userId;
             const bookId = parseInt(req.query.bookId);
 
             const isValidId = bookId && !isNaN(bookId);
@@ -39,7 +40,7 @@ export class BookController {
                 throw error;
             }
 
-            const result = await this.bookService.cancleBook(2, bookId);
+            const result = await this.bookService.cancleBook(userId, bookId);
 
             return res.status(200).json(result);
         } catch (err) {
