@@ -64,7 +64,7 @@ export class ReviewsRepository{
 
     updateReview= async(reviewId,/*sitterId,*/comment,grade)=>{
 
-      const updatedReview= await Review.update(
+       await Review.update(
             {
                // ...(sitterId &&{sitterId}),
                 ...(comment &&{comment}),
@@ -72,7 +72,7 @@ export class ReviewsRepository{
             },
             { where: {id: reviewId}},
         );
-        const review =await this.reviewsRepository.findReviewById(reviewId);
+
         return review;
     }
 

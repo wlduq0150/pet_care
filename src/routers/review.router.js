@@ -1,7 +1,6 @@
 import express from 'express';
-import {
-    ReviewsController
-} from "../controllers/review.controller.js";
+import {ReviewsController} from "../controllers/review.controller.js";
+import { isAuth } from "../../middlewares/authMiddleware.js";
 
 const reviewRouter = express.Router();
 
@@ -13,11 +12,11 @@ reviewRouter.get("/:reviewId", reviewsController.getReviewById);
 
 reviewRouter.get("/userId/:userId", reviewsController.getReviewByUserId);
 
-reviewRouter.post("/", reviewsController.createReview);
+reviewRouter.post("/",isAuth,reviewsController.createReview);
 
-reviewRouter.put("/:reviewId", reviewsController.updateReview);
+reviewRouter.put("/:reviewId",isAuth,reviewsController.updateReview);
 
-reviewRouter.delete("/:reviewId", reviewsController.deleteReview);
+reviewRouter.delete("/:reviewId",isAuth,reviewsController.deleteReview);
 
 export {
     reviewRouter
