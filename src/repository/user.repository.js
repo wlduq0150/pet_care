@@ -16,7 +16,7 @@ export class UsersRepository {
         });
 
         return users;
-    };
+    }
 
     readOneById = async (id) => {
         const user = await User.findOne({
@@ -26,7 +26,7 @@ export class UsersRepository {
         });
 
         return user;
-    };
+    }
 
     /**
      * body = {
@@ -34,13 +34,8 @@ export class UsersRepository {
      * }
      */
 
-    updateOneById = async (id, {
-        email,
-        previousPassword,
-        password,
-        experience,
-        type
-    }) => {
+    updateOneById = async (id, data
+    ) => {
         const user = await this.readOneById(id);
         /** 
          * user = {
@@ -50,32 +45,10 @@ export class UsersRepository {
          *  ...
          * }
         */
-        if (!bcrypt.compare(previousPassword, user.password)) {
-            // 기존 패스워드 유효성이 틀린 경우 에러 메시지 출력
-        } // 기존 패스워드 유효성 확인       
-
-        const hashedPassword = bcrypt.hashSync(password, 10);
-        const updateData = {};
-        if (email) {
-            updateData.email = email;
-        }
-        if (password) {
-            updateData.password = password;
-        }
-        // experience 입력 AND user.role === 'sitter'
-        if (experience && user.role === 'sitter') {
-            updateData.experience = experience;
-        }
-        if (type && user.role === 'customer') {
-            updateData.type = type;
-        }
         // 첫 번째 object : database에 변경할 내용
         // 두 번째 object : 변경할 행에 대한 조건문(where)
         const result = await User.update({
-            email,
-            password: hashedPassword,
-            experience,
-            type,
+         ...data
         }, {
             where: {
                 id,
@@ -86,7 +59,7 @@ export class UsersRepository {
     };
 
     deleteOneById = async (id) => {
-        const result = await User.destroy({
+        const result = await db.User.destroy({
             where: {
                 id,
             },

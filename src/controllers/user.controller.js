@@ -16,7 +16,7 @@ export class UsersController {
       // this. === UsersController.
       //try catch를 통하여 서버종료방지
       //try에서 안되면 catch로 넘겨준다.
-      const me = await this.usersService.getUserById(res.locals.id);
+      const me = await this.usersService.getUserById(req.user.userId);
 
       return res.status(200).json({
         ok: true,
@@ -64,7 +64,7 @@ export class UsersController {
   updateUserInfo = async (req, res, next) => {
     try {
       // session에서 userId를 받아와야 함
-      const id = res.locals.id;
+      const id = req.user.userId;
       //요청한 바디정보
       const body = req.body;
       //유정정보 업데이트하기
@@ -82,7 +82,7 @@ export class UsersController {
   deleteMyId = async (req, res, next) => {
     try {
       // session에서 userId를 받아와야 함
-      const id = res.locals.id;
+      const id = req.user.userId;
       await this.usersService.deleteUserById(id);
 
       return res.status(200).json({
@@ -102,7 +102,9 @@ export class UsersController {
       const {
         id
       } = req.params; //파람스 안에 있는 id
-      await this.usersService.deleteUserById(id); //유저서비스 안에 있는거 사용해서
+
+      // id에 대한 유저 삭제
+      await this.usersService.deleteUserById(id); 
 
       return res.status(200).json({
         ok: true,

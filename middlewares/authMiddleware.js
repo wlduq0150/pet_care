@@ -2,22 +2,25 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
 
-const secretKey = process.env.COOKIE_SECRET;
-export const verifyToken = (req, res, next) => {
-    try {
-        const clientToken = req.cookies.user;
-        const decoded = jwt.verify(clientToken, secretKey);
-        if (decoded) {
-            res.locals.id = decoded.id;
-            next();
-        } else {
-            res.status(401).json({
-                error: 'unauthorized'
-            });
-        }
-    } catch (err) {
-        res.status(401).json({
-            error: 'token expired'
-        });
+
+export const isAuth = (req, res, next) => {
+    const { authorization } = req.headers;
+
+    const [authType, authToken] = (authorization || "").split(" ");
+
+    if(!authToken || authType !== "Bearer") {
+        const error = new Error("로그인 후 이용 가능한 기능입니다.");
+        error.status = 400;
+        throw error;
     }
-};
+
+    try{
+        const user = jwt.verify(authToken, process.env.COOKIE_SECRET);
+
+        req.user = user;
+        next();
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send("로그인 후 이용 가능한 기능입니다.");
+    }
+}
