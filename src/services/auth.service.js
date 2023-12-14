@@ -38,7 +38,7 @@ export class AuthService {
             throw error;
         }
 
-        return jwt.sign({ emailId: auth.email }, process.env.COOKIE_SECRET, {
+        return jwt.sign({ id: auth.id }, process.env.COOKIE_SECRET, {
             expiresIn: "2h",
         });
     }

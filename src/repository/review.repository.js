@@ -20,7 +20,7 @@ export class ReviewsRepository{
                 "createdAt",
                 "updatedAt",
             ],
-            include: { model: User, as: 'user', attributes: ["name"] },
+            // include: { model: User, as: 'user', attributes: ["name"] },
         });
         
         return reviews;
@@ -72,8 +72,8 @@ export class ReviewsRepository{
             },
             { where: {id: reviewId}},
         );
-        
-        return updatedReview;
+        const review =await this.reviewsRepository.findReviewById(reviewId);
+        return review;
     }
 
     deleteReview= async(reviewId)=>{
