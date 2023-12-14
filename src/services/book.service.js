@@ -1,21 +1,36 @@
 import { BookRepository } from "../repository/book.repository.js";
+import { UsersService } from "./user.service.js";
 
 export class BookService {
 
     bookRepository = new BookRepository();
-    // userRepository = new UserRepository();  
+    userService = new UsersService();  
+
+    findBooks = async (userId) => {
+        const user = await this.userService.getUserById(userId);
+
+        const idType = user.role === "customer" ? "userId" : "sitterId";
+
+        const books = await this.bookRepository.findBooks(idType, userId);
+
+        return {
+            ok: true,
+            message: "예약을 조회하셨습니다.",
+            data: books
+        };
+    }
 
     createBook = async (createBookData) => {
         const { userId, sitterId } = createBookData;
 
-        // const user = await this.userRepository.findByID(userId);
-        // const sitter = await this.userRepository.findByID(sitterId);
+        const user = await this.userService.getUserById(userId);
+        const sitter = await this.userService.getUserById(sitterId);
 
-        // if (!user || !sitter) {
-        //     const error = new Error("존재하지 않는 사용자입니다.");
-        //     error.status = 404;
-        //     throw error;
-        // }
+        if (!user || !sitter) {
+            const error = new Error("존재하지 않는 사용자입니다.");
+            error.status = 404;
+            throw error;
+        }
 
         const result = await this.bookRepository.createBook(createBookData);
 
@@ -27,7 +42,7 @@ export class BookService {
     }
 
     cancleBook = async (userId, bookId) => {
-        const book = await this.bookRepository.findBook(bookId);
+        const book = await this.bookRepository.findBookById(bookId);
 
         if (!book) {
             const error = new Error("존재하지 않는 예약 정보입니다.");
