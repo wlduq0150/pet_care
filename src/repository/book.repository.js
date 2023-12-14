@@ -1,8 +1,24 @@
+import { Sequelize } from "sequelize";
 import { db } from "../../models/index.js";
 
 export class BookRepository {
     findBooks = async (idType, id) => {
-        const books = await db.Book.findAll({ idType: id });
+        const books = await db.Book.findAll({
+            where: {
+                [idType]: id
+            },
+            include: {
+                model: db.User,
+                as: "sitters"
+            }
+        });
+
+        // const books = await db.sequelize.query(
+        //     "select b.*, u.name as sitter from books b " + 
+        //     "inner join users u " + 
+        //     "on b.sitterId = u.id " + 
+        //     "where userId = 19;"
+        // );
         return books;
     }
 
