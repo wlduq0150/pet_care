@@ -20,7 +20,7 @@ export class ReviewsRepository{
                 "createdAt",
                 "updatedAt",
             ],
-           // include: { model: User, as: 'user', attributes: ["name"] },
+           // include: { model: User, as: 'user', attributes: ["name"] },*/
         });
         
 
