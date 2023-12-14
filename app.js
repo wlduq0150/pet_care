@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import nunjucks from "nunjucks";
 import morgan from "morgan";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import { sessionMiddleware } from "./middlewares/sessionMiddleware.js";
 import { routerMiddleware } from "./middlewares/routerMiddleware.js";
@@ -47,6 +48,12 @@ db.sequelize.sync()
 app.use(cors());//14-17:30추가됨
 // middleware
 // middleware
+
+app.use(
+    cors({
+        origin: "*",
+    })
+);
 
 app.use(morgan("dev"));
 
