@@ -1,4 +1,8 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+
+
 
 export const isAuth = (req, res, next) => {
     const { authorization } = req.headers;
@@ -12,7 +16,7 @@ export const isAuth = (req, res, next) => {
     }
 
     try{
-        const user = jwt.verify(authToken, process.env.COOKIE_SECRET);
+        const user = jwt.verify(authToken, process.env.JWT_SECRET);
 
         req.user = user;
         next();
@@ -20,4 +24,4 @@ export const isAuth = (req, res, next) => {
         console.log(err);
         return res.status(400).send("로그인 후 이용 가능한 기능입니다.");
     }
-}
+};
