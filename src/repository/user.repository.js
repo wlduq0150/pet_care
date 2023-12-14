@@ -1,25 +1,18 @@
-import bcrypt from 'bcrypt';
-import { db } from "../../models/index.js";
+import bcrypt from "bcrypt";
+import {
+    db
+} from "../../models/index.js";
 
 const {
     User
 } = db;
 
 export class UsersRepository {
-
-    readMany = async () => {
-        const users = await User.findAll({
-            where: {
-                role: 'sitter'
-            }
-        });
-
-        return users;
-    }
-      
     readSitters = async () => {
         const users = await User.findAll({
-            where: { role: 'sitter' }
+            where: {
+                role: "sitter",
+            },
         });
 
         return users;
@@ -28,42 +21,48 @@ export class UsersRepository {
     readOneById = async (id) => {
         const user = await User.findOne({
             where: {
-                id
-            }
+                id,
+            },
         });
 
         return user;
     }
 
-    updateOneById = async (id, {
-        email,
-        password,
-        experience,
-        role
-    }) => {
-        const hashedPassword = bcrypt.hashSync(password, 10);
+    /**
+     * body = {
+     *  email:
+     * }
+     */
 
+    updateOneById = async (id, data
+    ) => {
+        const user = await this.readOneById(id);
+        /** 
+         * user = {
+         *  id: 
+         *  email:
+         *  password:
+         *  ...
+         * }
+        */
         // 첫 번째 object : database에 변경할 내용
         // 두 번째 object : 변경할 행에 대한 조건문(where)
         const result = await User.update({
-            email,
-            password: hashedPassword,
-            experience,
-            role
+         ...data
         }, {
             where: {
-                id
-            }
+                id,
+            },
         });
 
         return result;
-    }
+    };
 
     deleteOneById = async (id) => {
-        const result = await User.destroy({
+        const result = await db.User.destroy({
             where: {
-                id
-            }
+                id,
+            },
         });
 
         return result;
@@ -74,10 +73,14 @@ export class UsersRepository {
             ...hashCreateAuthData,
         });
         return result;
-    }
+    };
 
     readOneByEmail = async (email) => {
-        const user = await db.User.findOne({ where: { email } })
+        const user = await db.User.findOne({
+            where: {
+                email
+            }
+        });
         return user;
-    }
-};
+    };
+}

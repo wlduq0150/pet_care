@@ -1,6 +1,8 @@
+//레파지토리 불러오기
 import {
     UsersRepository
 } from "../repository/user.repository.js";
+//클라스 이용해서 내보내기 
 export class UsersService {
     usersRepository = new UsersRepository();
     getSitters = async () => {

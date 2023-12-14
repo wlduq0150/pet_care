@@ -20,7 +20,7 @@ export class ReviewsRepository{
                 "createdAt",
                 "updatedAt",
             ],
-           // include: { model: User, as: 'user', attributes: ["name"] },
+            // include: { model: User, as: 'user', attributes: ["name"] },
         });
         
         return reviews;
@@ -73,7 +73,6 @@ export class ReviewsRepository{
             { where: {id: reviewId}},
         );
 
-        const review=await Review.findByPk(reviewId);
         return review;
     }
 
