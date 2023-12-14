@@ -13,13 +13,14 @@ export class UsersRepository {
                 role: 'sitter'
             }
         });
+
+        return users;
+    }
       
-  readSitters = async () => {
-    const users = await User.findAll({
-      where: {
-        role: 'sitter'
-      }
-    });
+    readSitters = async () => {
+        const users = await User.findAll({
+            where: { role: 'sitter' }
+        });
 
         return users;
     }
@@ -32,8 +33,7 @@ export class UsersRepository {
         });
 
         return user;
-      }
-    };
+    }
 
     updateOneById = async (id, {
         email,
