@@ -21,10 +21,13 @@ export class ReviewsController{
             const {reviewId} =req.params;
             const review =await this.reviewsService.findReviewById(reviewId);
             if(!review){
-                return res.status(404).json({
+                const error = new Error("해당 리뷰는 존재하지 않습니다");
+                error.status = 404;
+                throw error;
+              /*  return res.status(404).json({
                     ok:false,
                     message:"해당 리뷰는 존재하지 않습니다",
-                });
+                });*/
             }
             
             return res.status(200).json({
@@ -128,8 +131,7 @@ export class ReviewsController{
                 })
             }
             //내가 작성한 리뷰인지 확인 
-            const myreview= review.userId==userId;
-            if(!myreview){
+            if(!review.userId==userId){
                 return res.status(403).json({
                     ok:false,
                     message:"수정할 수 없는 리뷰입니다."
@@ -168,7 +170,6 @@ export class ReviewsController{
                     message:"해당 리뷰는 존재하지 않습니다.",
                 })
             }
-            
             //내가 만든 리뷰인지 확인
             if(!review.userId==userId){
                 return res.status(403).json({

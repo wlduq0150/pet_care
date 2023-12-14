@@ -7,7 +7,7 @@ const {Review, User}= db;
 export class ReviewsRepository{
     findAllReviews=async()=>{
         const reviews =await Review.findAll({
-            attributes:[
+           /* attributes:[
                 "id",
                
                 //추후에 주석 제거할 예정
@@ -19,16 +19,17 @@ export class ReviewsRepository{
                 "grade",
                 "createdAt",
                 "updatedAt",
-            ],
+            ],*/
            // include: { model: User, as: 'user', attributes: ["name"] },
         });
         
+
         return reviews;
     }
 
     findReviewById =async(reviewId)=>{
         const review =await Review.findByPk(reviewId,{
-            attributes:[
+          /*  attributes:[
                 "id",
                 //추후에 주석 제거할 예정
                 "userId",
@@ -38,9 +39,10 @@ export class ReviewsRepository{
                 "grade",
                 "createdAt",
                 "updatedAt",
-            ],
+            ],*/
            // include: { model: User, as: 'user', attributes: [] },
         });
+        
 
         return review;
     }
@@ -50,10 +52,8 @@ export class ReviewsRepository{
             where:{
                 userId:+userId
                 }
-            
         });
-
-
+        
         return reviews
     }
 
@@ -62,11 +62,10 @@ export class ReviewsRepository{
         return createdReview;
     }
 
-    updateReview= async(reviewId,/*sitterId,*/comment,grade)=>{
+    updateReview= async(reviewId,comment,grade)=>{
 
        await Review.update(
             {
-               // ...(sitterId &&{sitterId}),
                 ...(comment &&{comment}),
                 ...(grade &&{grade}),
             },

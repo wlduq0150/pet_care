@@ -6,6 +6,10 @@ export class ReviewsService{
     findAllReviews = async()=>{
         const reviews =await this.reviewsRepository.findAllReviews();
 
+        if(!reviews){
+            return false;
+        }
+
         reviews.sort((a,b)=>{
             return b.createdAt-a.createdAt;
         });
@@ -23,6 +27,9 @@ export class ReviewsService{
     findReviewById =async(reviewId)=>{
         const review =await this.reviewsRepository.findReviewById(reviewId);
 
+        if(!review){
+            return false;
+        }
         return{
             //id는 추후에 지울 예정
             id: review.id,
@@ -38,6 +45,10 @@ export class ReviewsService{
     findReviewByUserId=async(userId)=>{
         const reviews =await this.reviewsRepository.findReviewByUserId(userId);
 
+        if(!reviews.length){
+            return false;
+        }
+
         return reviews.map((review)=>{
             return{
                 id: review.id,
@@ -49,7 +60,7 @@ export class ReviewsService{
 
     }
 
-    //추후에 유저id도 받을 예정
+    
     createReview =async(userId,sitterId,comment,grade)=>{
         const createdReview =await this.reviewsRepository.createReview(
             userId,
