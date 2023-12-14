@@ -14,6 +14,7 @@ import { usersRouter } from "./src/routers/user.router.js";
 import { AuthRouter } from "./src/routers/auth.router.js";
 import {apiRouter} from "./src/routers/api.router.js";
 
+import cors from "cors";//14-17:30추가됨
 // 환경변수 세팅
 dotenv.config();
 
@@ -43,6 +44,7 @@ db.sequelize.sync()
 	console.log(e);
 });
 
+app.use(cors());//14-17:30추가됨
 // middleware
 // middleware
 

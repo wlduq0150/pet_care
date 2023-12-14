@@ -19,6 +19,8 @@ export class ReviewsService{
                 id: review.id,
                 //sitterName:review.sitterName,
                 sitterId :review.sitterId,
+                userId: review.userId,
+                comment: review.comment,
                 grade: review.grade,
             };
         });
