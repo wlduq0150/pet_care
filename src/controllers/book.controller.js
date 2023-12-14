@@ -5,10 +5,14 @@ export class BookController {
 
     createBook = async (req, res, next) => {
         try {
-            const createBookData = req.body;
+            const userId = req.user.userId;
+            const createBookData = {
+                ...req.body,
+                userId
+            };
 
             const isValidData =
-                "userId" in createBookData &&
+                createBookData["userId"] &&
                 "sitterId" in createBookData &&
                 "requirement" in createBookData &&
                 "date" in createBookData;
@@ -30,7 +34,7 @@ export class BookController {
     cancleBook = async (req, res, next) => {
         try {
             const userId = req.user.userId;
-            const bookId = parseInt(req.query.bookId);
+            const bookId = parseInt(req.params.bookId);
 
             const isValidId = bookId && !isNaN(bookId);
 

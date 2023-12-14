@@ -8,7 +8,7 @@ export class AuthService {
     signup = async (createAuthData) => {
         const { email, name, password, checkPassword, role, experience, type } = createAuthData;
         const hashPassword = await bcrypt.hash(password, 10);
-        const hashCreateAuthData = { email, name, hashPassword, role, experience, type };
+        const hashCreateAuthData = { email, name, password: hashPassword, role, experience, type };
 
         if (password !== checkPassword) {
             const error = new Error("패스워드를 다시 확인해주세요.");
@@ -44,7 +44,7 @@ export class AuthService {
             throw error;
         }
 
-        return jwt.sign({ userId: auth.email }, process.env.COOKIE_SECRET, {
+        return jwt.sign({ userId: auth.id }, process.env.COOKIE_SECRET, {
             expiresIn: "2h",
         });
     }
