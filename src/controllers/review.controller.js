@@ -62,8 +62,8 @@ export class ReviewsController{
 
     createReview= async(req,res,next)=>{
         try{
-           const {id:userId}= req.user
-            
+           const {userId:userId}= req.user
+            //console.log(userId);
             const {sitterId, comment, grade} =req.body;
 
             if(!sitterId){
