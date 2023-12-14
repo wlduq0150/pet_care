@@ -13,16 +13,18 @@ export class ReviewsService{
         reviews.sort((a,b)=>{
             return b.createdAt-a.createdAt;
         });
-        
+       
+
         return reviews.map((review)=>{
+            
             return{
-                id: review.id,
-                //sitterName:review.sitterName,
-                sitterId :review.sitterId,
-                userId: review.userId,
-                comment: review.comment,
-                grade: review.grade,
+                id: review.review.id,
+                userName: review.userName,
+                sitterName :review.sitterName,
+                comment: review.review.comment,
+                grade: review.review.grade,
             };
+           
         });
     };
 
@@ -34,13 +36,11 @@ export class ReviewsService{
         }
         return{
             //id는 추후에 지울 예정
-            id: review.id,
-            //추후 sitterId를 제거하고 아래 주석을 제거 할 예정
-            // sitterName: review.sitterName,
-            sitterId :review.sitterId,
-            userId: review.userId,
-            comment: review.comment,
-            grade: review.grade,
+            id: review.review.id,
+            userName: review.userName,
+            sitterName: review.sitterName,
+            comment: review.review.comment,
+            grade: review.review.grade,
         };
     };
 

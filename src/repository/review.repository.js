@@ -6,46 +6,28 @@ const {Review, User}= db;
 
 export class ReviewsRepository{
     findAllReviews=async()=>{
-        const reviews =await Review.findAll({
-           /* attributes:[
-                "id",
-               
-                //추후에 주석 제거할 예정
-                "userId", 
-                //  [Sequelize.col('user.name'), 'userName'],
-                "sitterId",
-                "comment",
-             
-                "grade",
-                "createdAt",
-                "updatedAt",
-            ],
-
-           // include: { model: User, as: 'user', attributes: ["name"] },*/
-        });
-        
-
-        return reviews;
+        const reviews =await Review.findAll({});
+    
+       return await Promise.all( reviews.map(async(review)=>{
+        const user= await User.findByPk(review.userId);
+        const sitter= await User.findByPk(review.sitterId);
+        return {
+            review: review,
+            userName: user.name,
+            sitterName: sitter.name,
+        }
+        }))
     }
 
     findReviewById =async(reviewId)=>{
-        const review =await Review.findByPk(reviewId,{
-          /*  attributes:[
-                "id",
-                //추후에 주석 제거할 예정
-                "userId",
-                "sitterId",
-                "comment",
-                //[Sequelize.col('user.name'), 'userName'],
-                "grade",
-                "createdAt",
-                "updatedAt",
-            ],*/
-           // include: { model: User, as: 'user', attributes: [] },
-        });
-        
-
-        return review;
+        const review =await Review.findByPk(reviewId);
+        const userName =await User.findByPk(review.userId);
+        const sitterName =await User.findByPk(review.sitterId);
+       
+        return {
+           review: review,
+           userName: userName.name,
+           sitterName: sitterName.name};
     }
     
     findReviewByUserId=async(userId)=>{
