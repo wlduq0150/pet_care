@@ -20,7 +20,7 @@ export class ReviewsRepository{
                 "createdAt",
                 "updatedAt",
             ],
-            include: { model: User, as: 'user', attributes: ["name"] },
+           // include: { model: User, as: 'user', attributes: ["name"] },
         });
         
         return reviews;
@@ -64,7 +64,7 @@ export class ReviewsRepository{
 
     updateReview= async(reviewId,/*sitterId,*/comment,grade)=>{
 
-      const updatedReview= await Review.update(
+       await Review.update(
             {
                // ...(sitterId &&{sitterId}),
                 ...(comment &&{comment}),
@@ -72,8 +72,9 @@ export class ReviewsRepository{
             },
             { where: {id: reviewId}},
         );
-        
-        return updatedReview;
+
+        const review=await Review.findByPk(reviewId);
+        return review;
     }
 
     deleteReview= async(reviewId)=>{
