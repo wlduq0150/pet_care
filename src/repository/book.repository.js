@@ -1,7 +1,12 @@
 import { db } from "../../models/index.js";
 
 export class BookRepository {
-    findBook = async (id) => {
+    findBooks = async (idType, id) => {
+        const books = await db.Book.findAll({ idType: id });
+        return books;
+    }
+
+    findBookById = async (id) => {
         const book = await db.Book.findOne({ where: { id } });
         return book;
     };
