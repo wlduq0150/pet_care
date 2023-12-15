@@ -6,6 +6,6 @@ const router = express.Router();
 
 const imageController = new ImageController();
 
-router.get("/image/upload", uploadThumbnail, imageController.uploadImage);
+router.post("/image/upload", uploadThumbnail, imageController.uploadImage);
 
 export { router as ImageRouter };
