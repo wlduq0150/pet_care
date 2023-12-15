@@ -23,6 +23,14 @@ export default class User extends Model {
                     type: DataTypes.STRING(255),
                     allowNull: false,
                 },
+                thumbnail: {
+                    type: DataTypes.STRING(255),
+                    allowNull: true,
+                },
+                description: {
+                    type: DataTypes.STRING(255),
+                    allowNull: true,
+                },
                 role: {
                     type: DataTypes.ENUM(["sitter", "customer"]),
                     allowNull: false,
