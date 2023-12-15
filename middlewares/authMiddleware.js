@@ -22,6 +22,6 @@ export const isAuth = (req, res, next) => {
         next();
     } catch (err) {
         console.log(err);
-        return res.status(400).send("로그인 후 이용 가능한 기능입니다.");
+        return res.status(401).send("로그인 후 이용 가능한 기능입니다.");
     }
 };

@@ -14,6 +14,7 @@ import { BookRouter } from "./src/routers/book.router.js";
 import { usersRouter } from "./src/routers/user.router.js";
 import { AuthRouter } from "./src/routers/auth.router.js";
 import {apiRouter} from "./src/routers/api.router.js";
+import { ImageRouter } from "./src/routers/image.router.js";
 
 // 환경변수 세팅
 dotenv.config();
@@ -68,7 +69,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(sessionMiddleware);
 
 // api 라우터
-app.use("/api", [BookRouter, usersRouter, apiRouter, AuthRouter]);
+app.use("/api", [BookRouter, usersRouter, apiRouter, AuthRouter, ImageRouter]);
 
 // 라우터 404 에러 방지 미들웨어
 app.use(routerMiddleware);

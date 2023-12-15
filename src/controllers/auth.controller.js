@@ -15,9 +15,11 @@ export class AuthController {
         "email" in createAuthData &&
         "password" in createAuthData &&
         "checkPassword" in createAuthData &&
-        "role" in createAuthData &&
-        "experience" in createAuthData &&
-        "type" in createAuthData;
+        // "thumbnail" in createAuthData &&
+        // "description" in createAuthData &&
+        "role" in createAuthData;
+        // "experience" in createAuthData &&
+        // "type" in createAuthData;
 
       if (!isValidData) {
         const error = new Error("유효하지 않은 데이터입니다.");

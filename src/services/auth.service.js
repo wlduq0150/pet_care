@@ -6,14 +6,26 @@ export class AuthService {
     usersRepository = new UsersRepository();
 
     signup = async (createAuthData) => {
-        const { email, name, password, checkPassword, role, experience, type } = createAuthData;
-        const hashPassword = await bcrypt.hash(password, 10);
-        const hashCreateAuthData = { email, name, password: hashPassword, role, experience, type };
+        const { password, checkPassword, role, experience, type } = createAuthData;
 
         if (password !== checkPassword) {
             const error = new Error("패스워드를 다시 확인해주세요.");
             error.status = 403;
             throw error;
+        }
+
+        const hashPassword = await bcrypt.hash(password, 10);
+        let hashCreateAuthData = { 
+            ...createAuthData,
+            password: hashPassword
+        };
+
+        if (role === "sitter") {
+            if (!experience || !type) {
+                const error = new Error("필수정보가 누락되어 있습니다.");
+                error.status = 400;
+                throw error;
+            }
         }
 
         const result = await this.usersRepository.createUser(hashCreateAuthData);

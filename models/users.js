@@ -23,6 +23,14 @@ export default class User extends Model {
                     type: DataTypes.STRING(255),
                     allowNull: false,
                 },
+                thumbnail: {
+                    type: DataTypes.STRING(255),
+                    allowNull: true,
+                },
+                description: {
+                    type: DataTypes.STRING(255),
+                    allowNull: true,
+                },
                 role: {
                     type: DataTypes.ENUM(["sitter", "customer"]),
                     allowNull: false,
@@ -50,8 +58,8 @@ export default class User extends Model {
 
     static associate(db) {
         db.User.hasMany(db.Book, { as: "books", foreignKey: "userId", sourceKey: "id" });
-        db.User.hasMany(db.Book, { foreignKey: "sitterId", sourceKey: "id" });
+        db.User.hasMany(db.Book, { as: "book_for_sitters", foreignKey: "sitterId", sourceKey: "id" });
         db.User.hasMany(db.Review, { as: "reviews", foreignKey: "userId", sourceKey: "id" });
-        db.User.hasMany(db.Review, { foreignKey: "sitterId", sourceKey: "id" });
+        db.User.hasMany(db.Review, { as: "review_for_sitters", foreignKey: "sitterId", sourceKey: "id" });
     }
 }
