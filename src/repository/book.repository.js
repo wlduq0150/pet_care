@@ -9,16 +9,10 @@ export class BookRepository {
             },
             include: {
                 model: db.User,
-                as: "sitters"
+                as: "sitter",
+                attributes: ["name"]
             }
         });
-
-        // const books = await db.sequelize.query(
-        //     "select b.*, u.name as sitter from books b " + 
-        //     "inner join users u " + 
-        //     "on b.sitterId = u.id " + 
-        //     "where userId = 19;"
-        // );
         return books;
     }
 

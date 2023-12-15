@@ -20,5 +20,7 @@ Book.init(sequelize);
 Review.init(sequelize);
 
 User.associate(db);
+Book.associate(db);
+Review.associate(db);
 
 export { db };
