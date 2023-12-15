@@ -6,6 +6,7 @@ const {Review, User}= db;
 
 export class ReviewsRepository{
     findAllReviews=async()=>{
+
         const reviews =await Review.findAll({});
     
        return await Promise.all( reviews.map(async(review)=>{
