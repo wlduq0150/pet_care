@@ -35,7 +35,7 @@ export default class Book extends Model {
 	}
 	
 	static associate(db) {
-        db.Book.belongsTo(db.User, { foreignKey: "userId", targetKey: "id" });
-        db.Book.belongsTo(db.User, { foreignKey: "sitterId", targetKey: "id" });
+        db.Book.belongsTo(db.User, { as: "customer", foreignKey: "userId", targetKey: "id" });
+        db.Book.belongsTo(db.User, { as: "sitter", foreignKey: "sitterId", targetKey: "id" });
     }
 }
