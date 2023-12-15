@@ -44,8 +44,8 @@ export class ReviewsService{
         };
     };
 
-    findReviewByUserId=async(userId)=>{
-        const reviews =await this.reviewsRepository.findReviewByUserId(userId);
+    findReviewByUserId=async(sitterId)=>{
+        const reviews =await this.reviewsRepository.findReviewByUserId(sitterId);
 
         if(!reviews.length){
             return false;
@@ -62,6 +62,22 @@ export class ReviewsService{
 
     }
 
+    getReviewsSitterGrade=async(sitterId)=>{
+        const sitterReviews =await this.reviewsRepository.findReviewByUserId(sitterId);
+
+        if(sitterReviews.length==0){
+           return "없음";
+        }
+        
+        let sumSitterGrade;
+        sitterReviews.map((e)=>{
+            sumSitterGrade+=e.grade
+        })
+        const averageGrade= sumSitterGrade/sitterReviews.length
+
+        return averageGrade;
+
+    }
     
     createReview =async(userId,sitterId,comment,grade)=>{
         const createdReview =await this.reviewsRepository.createReview(

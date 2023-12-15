@@ -42,9 +42,9 @@ export class ReviewsController{
 
     getReviewByUserId= async(req,res,next)=>{
         try{
-            const {userId}=req.params;
+            const {sitterId}=req.params;
 
-            const review =await this.reviewsService.findReviewByUserId(userId);
+            const review =await this.reviewsService.findReviewByUserId(sitterId);
           
             if(!review){
                 return res.status(404).json({
@@ -63,9 +63,25 @@ export class ReviewsController{
         }
     }
 
+    getReviewsSitterGrade=async(req,res,next)=>{
+        try{
+            const {sitterId}=req.params;
+            
+            const sitterGrade=await this.reviewsService.getReviewsSitterGrade(sitterId);
+
+            return res.status(200).json({
+                ok:true,
+                message:"해당 시터의 평점을 조회했습니다",
+                data:sitterGrade,
+            });
+        }catch(err){
+            next(err);
+        }
+    }
+
     createReview= async(req,res,next)=>{
         try{
-           const {userId:userId}= req.user
+           const {userId:userId}= req.user;
             //console.log(userId);
             const {sitterId, comment, grade} =req.body;
 

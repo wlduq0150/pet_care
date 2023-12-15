@@ -6,7 +6,6 @@ const {Review, User}= db;
 
 export class ReviewsRepository{
     findAllReviews=async()=>{
-
         const reviews =await Review.findAll({});
     
        return await Promise.all( reviews.map(async(review)=>{
@@ -32,16 +31,16 @@ export class ReviewsRepository{
            sitterName: sitterName.name};
     }
     
-    findReviewByUserId=async(userId)=>{
+    findReviewByUserId=async(sitterId)=>{
         const reviews =await Review.findAll({
             where:{
-                userId:+userId
+                sitterId:+sitterId
                 }
         });
         
         return reviews
     }
-
+    
     createReview = async(userId,sitterId,comment,grade)=>{
         const createdReview = await Review.create({userId,sitterId,comment,grade})
         return createdReview;

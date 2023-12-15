@@ -10,7 +10,9 @@ reviewRouter.get("/", reviewsController.getReviews);
 
 reviewRouter.get("/:reviewId", reviewsController.getReviewById);
 
-reviewRouter.get("/userId/:userId", reviewsController.getReviewByUserId);
+reviewRouter.get("/sitterId/:sitterId", reviewsController.getReviewByUserId);
+
+reviewRouter.get("/sitter/grade/:sitterId",reviewsController.getReviewsSitterGrade);
 
 reviewRouter.post("/",isAuth,reviewsController.createReview);
 
