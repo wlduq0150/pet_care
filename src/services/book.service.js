@@ -4,7 +4,17 @@ import { UsersService } from "./user.service.js";
 export class BookService {
 
     bookRepository = new BookRepository();
-    userService = new UsersService();  
+    userService = new UsersService(); 
+
+    findBookById = async (bookId) => {
+        const book = await this.bookRepository.findBookById(bookId);
+
+        return {
+            ok: true,
+            message: "예약을 조회하셨습니다.",
+            data: book
+        };
+    }
 
     findBooks = async (userId) => {
         const user = await this.userService.getUserById(userId);

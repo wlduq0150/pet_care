@@ -6,6 +6,8 @@ const router = express.Router();
 
 const bookController = new BookController();
 
+router.get("/books/id/:bookId", isAuth, bookController.findBookById);
+
 router.get("/books/me", isAuth, bookController.findMyBooks);
 
 router.get("/books/:sitterId", bookController.findBooks);

@@ -11,7 +11,7 @@ import {
 
 const usersController = new UsersController();
 //라우터 순서 중요하다
-usersRouter.get('/users', isAuth, usersController.readUsers); //모든 유저 정보 조회
+usersRouter.get('/users', usersController.readUsers); //모든 유저 정보 조회
 usersRouter.get('/users/me', isAuth, usersController.readMyInfo); // 내 정보 조회
 
 usersRouter.get('/users/:id', isAuth, usersController.readUserInfo); //상세 유저 정보 조회

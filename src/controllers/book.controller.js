@@ -3,6 +3,19 @@ import { BookService } from "../services/book.service.js";
 export class BookController {
     bookService = new BookService();
 
+    findBookById = async (req, res, next) => {
+        try {
+            const bookId = req.params.bookId;
+
+            const result = await this.bookService.findBookById(bookId);
+
+            return res.status(200).json(result);
+        } catch (err) {
+            console.log(err);
+            next(err);
+        }
+    }
+
     findBooks = async (req, res, next) => {
         try {
             const userId = req.params.sitterId;
