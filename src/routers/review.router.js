@@ -18,7 +18,7 @@ reviewRouter.get("/sitter/grade/:sitterId",reviewsController.getReviewsSitterGra
 
 reviewRouter.post("/",isAuth,reviewsController.createReview);
 
-reviewRouter.patch("/:reviewId",isAuth,reviewsController.updateReview);
+reviewRouter.put("/:reviewId",isAuth,reviewsController.updateReview);
 
 reviewRouter.delete("/:reviewId",isAuth,reviewsController.deleteReview);
 
