@@ -6,50 +6,82 @@ export class ReviewsService{
     findAllReviews = async()=>{
         const reviews =await this.reviewsRepository.findAllReviews();
 
+        if(!reviews){
+            return false;
+        }
+
         reviews.sort((a,b)=>{
             return b.createdAt-a.createdAt;
         });
-        
+       
+
         return reviews.map((review)=>{
+            
             return{
-                id: review.id,
-                //sitterName:review.sitterName,
-                sitterId :review.sitterId,
-                grade: review.grade,
+                id: review.review.id,
+                userName: review.userName,
+                sitterName :review.sitterName,
+                comment: review.review.comment,
+                grade: review.review.grade,
             };
+           
         });
     };
 
     findReviewById =async(reviewId)=>{
         const review =await this.reviewsRepository.findReviewById(reviewId);
 
+        if(!review){
+            return false;
+        }
         return{
             //id는 추후에 지울 예정
-            id: review.id,
-            //추후 sitterId를 제거하고 아래 주석을 제거 할 예정
-            // sitterName: review.sitterName,
-            sitterId :review.sitterId,
-            userId: review.userId,
-            comment: review.comment,
-            grade: review.grade,
+            id: review.review.id,
+            userName: review.userName,
+            sitterName: review.sitterName,
+            comment: review.review.comment,
+            grade: review.review.grade,
         };
     };
 
-    findReviewByUserId=async(userId)=>{
-        const reviews =await this.reviewsRepository.findReviewByUserId(userId);
+    findReviewByUserId=async(sitterId)=>{
+        const reviews =await this.reviewsRepository.findReviewByUserId(sitterId);
 
+        if(!reviews.length){
+            return false;
+        }
+
+        console.log(reviews[0].si);
         return reviews.map((review)=>{
-            return{
+            return {
+                
                 id: review.id,
-                //sitterName:review.sitterName,
-                sitterId :review.sitterId,
+                sitterName:review.sitter_reviews,
+                //sitterId :review.sitterId,
+                comment: review.comment,
                 grade: review.grade,
             };
         });
 
     }
 
-    //추후에 유저id도 받을 예정
+    getReviewsSitterGrade=async(sitterId)=>{
+        const sitterReviews =await this.reviewsRepository.findReviewByUserId(sitterId);
+
+        if(sitterReviews.length==0){
+           return "없음";
+        }
+        
+        let sumSitterGrade;
+        sitterReviews.map((e)=>{
+            sumSitterGrade+=e.grade
+        })
+        const averageGrade= sumSitterGrade/sitterReviews.length
+
+        return averageGrade;
+
+    }
+    
     createReview =async(userId,sitterId,comment,grade)=>{
         const createdReview =await this.reviewsRepository.createReview(
             userId,

@@ -1,0 +1,29 @@
+.reviews{
+    height: 50px;
+    width: 1000px;
+    border-radius: 20px;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+.sitterName{
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid black;
+    height: 40px;
+    width: 100px;
+    background-color: aqua;
+}
+.reviewOne{
+    
+    padding-top: 10px;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid black;
+    height: 40px;
+    width: 900px;
+    background-color: greenyellow;
+    display: grid;
+    grid-template-columns: 60px 500px 70px;
+}
