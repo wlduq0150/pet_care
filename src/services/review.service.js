@@ -51,11 +51,14 @@ export class ReviewsService{
             return false;
         }
 
+        console.log(reviews[0].si);
         return reviews.map((review)=>{
-            return{
+            return {
+                
                 id: review.id,
-                //sitterName:review.sitterName,
-                sitterId :review.sitterId,
+                sitterName:review.sitter_reviews,
+                //sitterId :review.sitterId,
+                comment: review.comment,
                 grade: review.grade,
             };
         });

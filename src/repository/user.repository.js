@@ -13,6 +13,18 @@ export class UsersRepository {
             where: {
                 role: "sitter",
             },
+
+            include: [{
+                model: db.Review,
+                as: "review_for_sitters",
+                attributes: ["grade"],
+            },
+            {
+                model: db.Book,
+                as: "book_for_sitters",
+                attributes: ["date"],
+            },
+        ]
         });
 
         return users;
@@ -23,6 +35,41 @@ export class UsersRepository {
             where: {
                 id,
             },
+            include: [{
+                model: db.Review,
+                as: "review_for_sitters",
+                attributes: 
+                    ["grade"],
+            },
+            {
+                model: db.Review,
+                as: "review_for_sitters",
+                attributes: ["comment"],
+            },
+            {
+                model: db.Review,
+                as:"review_for_sitters",
+                include:[{
+                    model: db.User,
+                    as :"user_reviews",
+                    attributes:["name"],
+                }],
+            },
+            {
+                model: db.Book,
+                as: "book_for_sitters",
+                attributes: ["date"],
+            },
+            {
+                model: db.Book,
+                as: "book_for_sitters",
+               include:{
+                model : db.User,
+                as:"customer",
+                attributes:["name"],
+               }
+            }
+        ]
         });
 
         return user;

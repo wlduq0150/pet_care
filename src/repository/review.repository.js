@@ -35,7 +35,12 @@ export class ReviewsRepository{
         const reviews =await Review.findAll({
             where:{
                 sitterId:+sitterId
-                }
+                },
+                include: {
+                    model: User,
+                    as: "sitter_reviews",
+                    attributes: ["name"],
+                },
         });
         
         return reviews

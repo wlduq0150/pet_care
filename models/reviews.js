@@ -37,7 +37,7 @@ export default class Review extends Model {
 	}
 	
 	static associate(db) {
-        db.Review.belongsTo(db.User, { foreignKey: "userId", targetKey: "id" });
-        db.Review.belongsTo(db.User, { foreignKey: "sitterId", targetKey: "id" });
+        db.Review.belongsTo(db.User, {as:"user_reviews", foreignKey: "userId", targetKey: "id" });
+        db.Review.belongsTo(db.User, {as:"sitter_reviews", foreignKey: "sitterId", targetKey: "id" });
     }
 }
