@@ -8,6 +8,8 @@ const reviewsController = new ReviewsController();
 
 reviewRouter.get("/", reviewsController.getReviews);
 
+reviewRouter.get("/myReviews",isAuth,reviewsController.getMyReviews);
+
 reviewRouter.get("/:reviewId", reviewsController.getReviewById);
 
 reviewRouter.get("/sitterId/:sitterId", reviewsController.getReviewByUserId);

@@ -46,21 +46,41 @@ export class ReviewsRepository{
         return reviews
     }
     
+    
+    findMyReviews=async(userId)=>{
+        const myReviews= await Review.findAll({
+            where:{
+                userId: userId
+            },
+            include:[{
+                model :User,
+                as:"sitter_reviews",
+                attributes:["name"],
+            },
+        {
+            model :User,
+            as:"user_reviews",
+            attributes:["name"],
+        }],
+        });
+
+        return myReviews;
+    }
+
+
     createReview = async(userId,sitterId,comment,grade)=>{
         const createdReview = await Review.create({userId,sitterId,comment,grade})
         return createdReview;
     }
 
-    updateReview= async(reviewId,comment,grade)=>{
-
+    updateReview= async(reviewId,body)=>{
        await Review.update(
             {
-                ...(comment &&{comment}),
-                ...(grade &&{grade}),
+             ...body,
             },
             { where: {id: reviewId}},
         );
-
+        const review =await Review.findByPk(reviewId);
         return review;
     }
 

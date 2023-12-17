@@ -79,9 +79,26 @@ export class ReviewsController{
         }
     }
 
+    getMyReviews= async(req,res,next)=>{
+        try{
+            const {userId}= req.user;
+
+
+            const myReviews= await this.reviewsService.findMyReviews(userId);
+
+            return res.status(200).json({
+                ok:true,
+                message:"내가 쓴 리뷰 조회에 성공했습니다.",
+                data: myReviews,
+            });
+        }catch(err){
+            next(err);
+        }
+    }
+
     createReview= async(req,res,next)=>{
         try{
-           const {userId:userId}= req.user;
+           const {userId}= req.user;
             //console.log(userId);
             const {sitterId, comment, grade} =req.body;
 
@@ -125,11 +142,14 @@ export class ReviewsController{
 
     updateReview=async(req,res,next)=>{
         try{
+           
             //아래 userId는 추후에 로그인한 유저 정보 받고 지울예정
             const {reviewId} =req.params;
-            const {id:userId}= req.user
-            const {/*sitterId,*/ comment, grade} =req.body;
+            const {userId}= req.user;
+            const {comment, grade} =req.body;
 
+           console.log(req.body);
+           
             if(/*!sitterId &&*/ !comment && !grade){
                 return res.status(400).json({
                     ok:false,
@@ -156,9 +176,7 @@ export class ReviewsController{
             //서비스로 보내기
             const updatedReview= await this.reviewsService.updateReview(
                 reviewId,
-               // sitterId,
-                comment,
-                grade,
+              req.body,
             )
 
             return res.status(200).json({
