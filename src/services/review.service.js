@@ -81,6 +81,12 @@ export class ReviewsService{
         return averageGrade;
 
     }
+
+    findMyReviews=async(userId)=>{
+        const myReviews= await this.reviewsRepository.findMyReviews(userId);
+
+        return myReviews;
+    }
     
     createReview =async(userId,sitterId,comment,grade)=>{
         const createdReview =await this.reviewsRepository.createReview(
@@ -100,13 +106,12 @@ export class ReviewsService{
         };
     };
 
-    updateReview =async(reviewId/*,sitterId*/,comment,grade)=>{
+    updateReview =async(reviewId/*,sitterId*/,body)=>{
         const updatedReview = await this.reviewsRepository.updateReview(
            
             reviewId,
            // sitterId,
-            comment,
-            grade,
+           body,
             );
 
         return {
