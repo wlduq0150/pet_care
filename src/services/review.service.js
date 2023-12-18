@@ -51,13 +51,12 @@ export class ReviewsService{
             return false;
         }
 
-        console.log(reviews[0].si);
         return reviews.map((review)=>{
             return {
                 
                 id: review.id,
+                userName: review.user_reviews,
                 sitterName:review.sitter_reviews,
-                //sitterId :review.sitterId,
                 comment: review.comment,
                 grade: review.grade,
             };
@@ -83,6 +82,23 @@ export class ReviewsService{
     }
 
     findMyReviews=async(userId)=>{
+        const userRole= await this.reviewsRepository.findUserRole(userId);
+
+        if(userRole.role=="sitter"){
+            const reviews =await this.reviewsRepository.findReviewByUserId(userId);
+
+            return reviews.map((review)=>{
+                return {
+                    role: "sitter",
+                    id: review.id,
+                    userName: review.user_reviews,
+                    sitterName:review.sitter_reviews,
+                    comment: review.comment,
+                    grade: review.grade,
+                };
+            });
+        }
+
         const myReviews= await this.reviewsRepository.findMyReviews(userId);
 
         return myReviews;

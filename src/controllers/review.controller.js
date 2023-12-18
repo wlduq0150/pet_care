@@ -83,7 +83,6 @@ export class ReviewsController{
         try{
             const {userId}= req.user;
 
-
             const myReviews= await this.reviewsService.findMyReviews(userId);
 
             return res.status(200).json({
@@ -148,8 +147,8 @@ export class ReviewsController{
             const {userId}= req.user;
             const {comment, grade} =req.body;
 
-           console.log(req.body);
-           
+           console.log(comment);
+
             if(/*!sitterId &&*/ !comment && !grade){
                 return res.status(400).json({
                     ok:false,
