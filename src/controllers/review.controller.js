@@ -99,7 +99,14 @@ export class ReviewsController{
         try{
            const {userId}= req.user;
             //console.log(userId);
-            const {sitterId, comment, grade} =req.body;
+            const {bookId, sitterId, comment, grade} =req.body;
+
+            if(!bookId){
+                return res.status(400).json({
+                    ok:false,
+                    message:"리뷰 작성시 예약번호가 입려되어야 합니다.",
+                })
+            }
 
             if(!sitterId){
                 return res.status(400).json({
@@ -123,6 +130,7 @@ export class ReviewsController{
             }
 
             const createdReview =await this.reviewsService.createReview(
+                bookId,
                 userId,
                 sitterId,
                 comment,
