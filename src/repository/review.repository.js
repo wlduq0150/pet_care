@@ -76,8 +76,8 @@ export class ReviewsRepository{
         return userRole;
     }
 
-    createReview = async(userId,sitterId,comment,grade)=>{
-        const createdReview = await Review.create({userId,sitterId,comment,grade})
+    createReview = async(bookId, userId,sitterId,comment,grade)=>{
+        const createdReview = await Review.create({bookId,userId,sitterId,comment,grade})
         return createdReview;
     }
 

@@ -9,6 +9,10 @@ export default class Review extends Model {
 				primaryKey: true,
 				autoIncrement: true
 			},
+			bookId: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
 			userId: {
 				type: DataTypes.INTEGER,
 				allowNull: false

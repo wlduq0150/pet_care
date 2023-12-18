@@ -104,8 +104,9 @@ export class ReviewsService{
         return myReviews;
     }
     
-    createReview =async(userId,sitterId,comment,grade)=>{
+    createReview =async(bookId, userId,sitterId,comment,grade)=>{
         const createdReview =await this.reviewsRepository.createReview(
+            bookId,
             userId,
             sitterId,
             comment,
@@ -114,6 +115,7 @@ export class ReviewsService{
         return {
             //추후 sitterId를 제거하고 아래 주석을 제거 할 예정
           //  sitterName: createdReview.sitterName,
+            bookId: createdReview.bookId,
             sitterId: createdReview.sitterId,
             userId: createdReview,userId,
             comment: createdReview.comment,
