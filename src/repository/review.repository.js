@@ -36,11 +36,15 @@ export class ReviewsRepository{
             where:{
                 sitterId:+sitterId
                 },
-                include: {
+                include: [{
                     model: User,
                     as: "sitter_reviews",
                     attributes: ["name"],
-                },
+                },{
+                    model:User,
+                    as: "user_reviews",
+                    attributes: ["name"],
+                }],
         });
         
         return reviews
@@ -67,6 +71,10 @@ export class ReviewsRepository{
         return myReviews;
     }
 
+    findUserRole= async(userId)=>{
+        const userRole= await User.findByPk(userId);
+        return userRole;
+    }
 
     createReview = async(userId,sitterId,comment,grade)=>{
         const createdReview = await Review.create({userId,sitterId,comment,grade})
